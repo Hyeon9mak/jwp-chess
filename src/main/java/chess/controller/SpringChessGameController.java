@@ -37,7 +37,7 @@ public final class SpringChessGameController {
     }
 
     @GetMapping()
-    private String goHome(final Model model) {
+    public String goHome(final Model model) {
         try {
             List<String> roomIds = roomService.allRoomsId();
             roomIds.forEach(id -> roomService.addRoom(id, new ChessGame()));
@@ -50,7 +50,7 @@ public final class SpringChessGameController {
     }
 
     @GetMapping("/enter")
-    private String enterRoom(@RequestParam final String id, final Model model) {
+    public String enterRoom(@RequestParam final String id, final Model model) {
         try {
             model.addAttribute("number", id);
             model.addAttribute("button", "새로운게임");
@@ -63,7 +63,7 @@ public final class SpringChessGameController {
     }
 
     @PostMapping(path = "/start")
-    private String startGame(@ModelAttribute final RoomIdDTO roomIdDTO, final Model model) {
+    public String startGame(@ModelAttribute final RoomIdDTO roomIdDTO, final Model model) {
         ChessGame chessGame = new ChessGame();
         chessGame.initialize();
         String roomId = roomIdDTO.getRoomId();
@@ -77,7 +77,7 @@ public final class SpringChessGameController {
     }
 
     @PostMapping(path = "/continue")
-    private String continueGame(@ModelAttribute final RoomIdDTO roomIdDTO, final Model model) {
+    public String continueGame(@ModelAttribute final RoomIdDTO roomIdDTO, final Model model) {
         String roomId = roomIdDTO.getRoomId();
         ChessGame chessGame = roomService.loadGameByRoomId(roomId);
         chessGame.initialize();
@@ -103,7 +103,7 @@ public final class SpringChessGameController {
     }
 
     @GetMapping(path = "/error-page")
-    private String errorPage(@RequestParam final String error, final Model model) {
+    public String errorPage(@RequestParam final String error, final Model model) {
         model.addAttribute("error", error);
         return "error";
     }
