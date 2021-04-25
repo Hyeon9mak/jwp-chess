@@ -1,47 +1,38 @@
 package chess.dao;
 
 import chess.dto.RoomDTO;
+import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public class RoomDAO {
+
     private final JdbcTemplate jdbcTemplate;
 
     public RoomDAO(final JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void createRoom(final String name) {
-        String query = "INSERT INTO room (title, black_user, white_user, status) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(query, name, 1, 2, 1);
+    public void createRoom(final String title, final String id, final String password) {
+        String query = "INSERT INTO room (title, white_nickname, white_password, status) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(query, title, id, password, "준비중");
     }
 
     public List<RoomDTO> allRooms() {
-        String query = "SELECT room.id, room.title, black.nickname AS black_user, white.nickname AS white_user, room.status " +
-                "FROM room JOIN user as black on black.id = room.black_user " +
-                "JOIN user as white on white.id = room.white_user ORDER BY room.status DESC, room.id DESC";
-
+        String query = "SELECT id, title, black_nickname, white_nickname, status FROM room ORDER BY room.id DESC";
         return jdbcTemplate.query(query, mapper());
     }
 
     private RowMapper<RoomDTO> mapper() {
         return (resultSet, rowNum) -> {
-            boolean playing = false;
-            int status = resultSet.getInt("status");
-            if (status == 1) {
-                playing = true;
-            }
             return new RoomDTO(
-                    resultSet.getInt("id"),
-                    resultSet.getString("title"),
-                    resultSet.getString("black_user"),
-                    resultSet.getString("white_user"),
-                    status,
-                    playing
+                resultSet.getInt("id"),
+                resultSet.getString("title"),
+                resultSet.getString("black_nickname"),
+                resultSet.getString("white_nickname"),
+                resultSet.getString("status")
             );
         };
     }

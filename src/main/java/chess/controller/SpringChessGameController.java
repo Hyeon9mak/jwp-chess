@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.domain.ChessGame;
 import chess.domain.Team;
+import chess.dto.CreateRoomRequestDTO;
 import chess.dto.PiecesDTO;
 import chess.dto.RoomIdDTO;
 import chess.dto.UsersDTO;
@@ -34,6 +35,12 @@ public final class SpringChessGameController {
         this.resultService = resultService;
         this.userService = userService;
         this.historyService = historyService;
+    }
+
+    @PostMapping(path = "/new-game")
+    public String createNewGame(@ModelAttribute final CreateRoomRequestDTO requestDTO) {
+        roomService.createRoom(requestDTO.getTitle(), requestDTO.getNickname(), requestDTO.getPassword());
+        return "chess";
     }
 
     @GetMapping()

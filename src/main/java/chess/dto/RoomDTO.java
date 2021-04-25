@@ -6,23 +6,14 @@ public final class RoomDTO {
     private final String blackUser;
     private final String whiteUser;
     private final String status;
-    private final boolean playing;
 
     public RoomDTO(final int id, final String title, final String blackUser, final String whiteUser,
-                   final int status, final boolean playing) {
+                   final String status) {
         this.id = id;
         this.title = title;
         this.blackUser = blackUser;
         this.whiteUser = whiteUser;
-        this.status = status(status);
-        this.playing = playing;
-    }
-
-    private String status(final int status) {
-        if (status == 1) {
-            return "진행중";
-        }
-        return "종료됨";
+        this.status = status;
     }
 
     public int getId() {
@@ -43,9 +34,5 @@ public final class RoomDTO {
 
     public String getStatus() {
         return status;
-    }
-
-    public boolean isPlaying() {
-        return playing;
     }
 }

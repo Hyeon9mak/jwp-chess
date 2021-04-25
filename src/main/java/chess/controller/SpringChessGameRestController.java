@@ -1,9 +1,9 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
+import chess.dto.CreateRoomRequestDTO;
 import chess.dto.MoveDTO;
 import chess.dto.ResultDTO;
-import chess.dto.RoomNameDTO;
 import chess.dto.SectionDTO;
 import chess.dto.StatusDTO;
 import chess.dto.UsersDTO;
@@ -12,6 +12,7 @@ import chess.service.ResultService;
 import chess.service.RoomService;
 import chess.service.UserService;
 import java.util.List;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,12 +34,6 @@ public class SpringChessGameRestController {
         this.resultService = resultService;
         this.userService = userService;
         this.historyService = historyService;
-    }
-
-    @PostMapping(path = "/new-game", consumes = "application/json")
-    public boolean createNewGame(@RequestBody final RoomNameDTO roomNameDTO) {
-        roomService.createRoom(roomNameDTO.getName());
-        return true;
     }
 
     @PostMapping(path = "/turn", consumes = "application/json")
