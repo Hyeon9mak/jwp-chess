@@ -9,7 +9,7 @@ chess;
 CREATE TABLE user
 (
     id       INT         NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nickname VARCHAR(64) NOT NULL
+    nickname VARCHAR(64) NOT NULL UNIQUE
 );
 
 CREATE TABLE result
@@ -24,8 +24,8 @@ CREATE TABLE room
 (
     id         INT         NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title      VARCHAR(64) NOT NULL,
-    black_user INT         NOT NULL, -- user.id와 연결
-    white_user INT         NOT NULL, -- user.id와 연결
+    black_user VARCHAR(64), -- user.id와 연결
+    white_user VARCHAR(64), -- user.id와 연결
     status     TINYINT(4) NOT NULL   -- 0 -> 종료된 게임을 뜻함 / 1 -> 진행중인 게임을 뜻함
 );
 
@@ -42,5 +42,3 @@ CREATE TABLE log
 INSERT INTO user (nickname)
 VALUES ('blackAir'),
        ('whiteAir');
-
-
