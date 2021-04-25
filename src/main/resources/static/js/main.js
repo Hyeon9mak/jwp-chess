@@ -42,19 +42,49 @@ function newGame(name) {
     });
 }
 
-function showPopup() {
-    const popup = document.querySelector('#popup');
+function showNewGamePopup() {
+    const popup = document.querySelector('.new-game');
     popup.classList.remove('hide');
 }
 
-function closePopup() {
-    const roomName = document.querySelector('#room-name');
-    const userId = document.querySelector('#user-id');
-    const userPassword = document.querySelector('#user-password');
+function closeNewGamePopup() {
+    const popup = document.querySelector('.new-game');
+    popup.classList.add('hide');
+
+    const roomName = popup.querySelector('#room-name');
+    const userId = popup.querySelector('#user-id');
+    const userPassword = popup.querySelector('#user-password');
     roomName.value = "";
     userId.value = "";
     userPassword.value = "";
+}
 
-    const popup = document.querySelector('#popup');
+function showEnterBlackPopup() {
+    const popup = document.querySelector('.enter-black');
+    popup.classList.remove('hide');
+}
+
+function closeEnterBlackPopup() {
+    const popup = document.querySelector('.enter-black');
     popup.classList.add('hide');
+
+    const userId = popup.querySelector('#user-id');
+    const userPassword = popup.querySelector('#user-password');
+    userId.value = "";
+    userPassword.value = "";
+}
+
+function showEnterWhitePopup() {
+    const popup = document.querySelector('.enter-white');
+    popup.classList.remove('hide');
+}
+
+function closeEnterWhitePopup() {
+    const popup = document.querySelector('.enter-white');
+    popup.classList.add('hide');
+
+    const userId = popup.querySelector('#user-id');
+    const userPassword = popup.querySelector('#user-password');
+    userId.value = "";
+    userPassword.value = "";
 }
