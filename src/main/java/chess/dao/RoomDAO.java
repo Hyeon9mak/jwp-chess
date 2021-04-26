@@ -15,13 +15,18 @@ public class RoomDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void createRoom(final String title, final String id, final String password) {
-        String query = "INSERT INTO room (title, white_nickname, white_password, status) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(query, title, id, password, "준비중");
+    public void createRoom(final String title) {
+        String query = "INSERT INTO room (title, status) VALUES (?, ?)";
+        jdbcTemplate.update(query, title, "준비중");
+    }
+
+    public String createdRoomId() {
+        String query = "SELECT LAST_INSERT_ID()";
+        return jdbcTemplate.queryForObject(query, String.class);
     }
 
     public List<RoomDTO> allRooms() {
-        String query = "SELECT id, title, black_nickname, white_nickname, status FROM room ORDER BY room.id DESC";
+        String query = "SELECT id, title, status FROM room ORDER BY room.id DESC";
         return jdbcTemplate.query(query, mapper());
     }
 
@@ -30,15 +35,13 @@ public class RoomDAO {
             return new RoomDTO(
                 resultSet.getInt("id"),
                 resultSet.getString("title"),
-                resultSet.getString("black_nickname"),
-                resultSet.getString("white_nickname"),
                 resultSet.getString("status")
             );
         };
     }
 
     public void changeStatusEndByRoomId(final String roomId) {
-        String query = "UPDATE room SET status = 0 WHERE id = ?";
+        String query = "UPDATE room SET status = '종료됨' WHERE id = ?";
         jdbcTemplate.update(query, roomId);
     }
 
